@@ -1,0 +1,638 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Rowan Voss — Architecture</title>
+<meta name="description" content="Architecture portfolio of Rowan Voss — selected works, practice, and contact.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Spectral:ital,wght@0,400;0,500;1,400&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper:#e7e3da;
+    --paper-deep:#ded8cb;
+    --ink:#17181c;
+    --ink-soft:#4a4b4f;
+    --blue:#1f3a5f;
+    --brass:#9c7a4a;
+    --line:#b8b3a6;
+    --line-soft:#cfcabd;
+    --max:1180px;
+  }
+
+  *{margin:0;padding:0;box-sizing:border-box;}
+
+  html{scroll-behavior:smooth;}
+
+  body{
+    background:var(--paper);
+    color:var(--ink);
+    font-family:'Spectral', serif;
+    font-size:17px;
+    line-height:1.6;
+    -webkit-font-smoothing:antialiased;
+  }
+
+  ::selection{ background:var(--blue); color:var(--paper); }
+
+  a{ color:inherit; text-decoration:none; }
+
+  .mono{
+    font-family:'IBM Plex Mono', monospace;
+    letter-spacing:.04em;
+  }
+
+  .display{
+    font-family:'Space Grotesk', sans-serif;
+  }
+
+  .wrap{
+    max-width:var(--max);
+    margin:0 auto;
+    padding:0 32px;
+  }
+
+  /* ---------- Title-block signature component ---------- */
+  .titleblock{
+    border:1px solid var(--ink);
+    display:inline-flex;
+    font-family:'IBM Plex Mono', monospace;
+    font-size:11px;
+    letter-spacing:.06em;
+    text-transform:uppercase;
+  }
+  .titleblock div{
+    padding:6px 12px;
+    border-left:1px solid var(--ink);
+  }
+  .titleblock div:first-child{ border-left:none; }
+  .titleblock .tb-label{ color:var(--ink-soft); display:block; font-size:9px; margin-bottom:2px; }
+  .titleblock .tb-value{ color:var(--ink); font-weight:500; }
+
+  /* ---------- Header ---------- */
+  header{
+    position:sticky;
+    top:0;
+    z-index:50;
+    background:rgba(231,227,218,.92);
+    backdrop-filter:blur(6px);
+    border-bottom:1px solid var(--line);
+  }
+  .nav{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    padding:18px 0;
+  }
+  .logo{
+    font-family:'Space Grotesk', sans-serif;
+    font-weight:600;
+    font-size:18px;
+    letter-spacing:.02em;
+    display:flex;
+    align-items:baseline;
+    gap:8px;
+  }
+  .logo span{
+    font-family:'IBM Plex Mono', monospace;
+    font-size:11px;
+    color:var(--blue);
+    font-weight:400;
+  }
+  nav.links{
+    display:flex;
+    gap:36px;
+    font-family:'IBM Plex Mono', monospace;
+    font-size:12px;
+    letter-spacing:.08em;
+    text-transform:uppercase;
+  }
+  nav.links a{
+    position:relative;
+    padding-bottom:3px;
+    color:var(--ink-soft);
+    transition:color .2s ease;
+  }
+  nav.links a:hover{ color:var(--ink); }
+  nav.links a::after{
+    content:"";
+    position:absolute;
+    left:0; bottom:0;
+    width:0%; height:1px;
+    background:var(--blue);
+    transition:width .25s ease;
+  }
+  nav.links a:hover::after{ width:100%; }
+
+  .menu-btn{
+    display:none;
+    flex-direction:column;
+    gap:5px;
+    background:none;
+    border:none;
+    cursor:pointer;
+    padding:8px;
+  }
+  .menu-btn span{
+    width:22px; height:1px; background:var(--ink);
+  }
+
+  /* ---------- Hero ---------- */
+  .hero{
+    padding:96px 0 64px;
+    position:relative;
+    overflow:hidden;
+  }
+  .hero-grid{
+    display:grid;
+    grid-template-columns:1.1fr .9fr;
+    gap:56px;
+    align-items:center;
+  }
+  .hero-eyebrow{
+    font-family:'IBM Plex Mono', monospace;
+    font-size:12px;
+    letter-spacing:.12em;
+    text-transform:uppercase;
+    color:var(--blue);
+    margin-bottom:22px;
+    display:flex;
+    align-items:center;
+    gap:10px;
+  }
+  .hero-eyebrow::before{
+    content:"";
+    width:28px; height:1px;
+    background:var(--blue);
+  }
+  h1.hero-title{
+    font-family:'Space Grotesk', sans-serif;
+    font-weight:600;
+    font-size:clamp(38px, 5.4vw, 68px);
+    line-height:1.03;
+    letter-spacing:-.01em;
+    margin-bottom:26px;
+  }
+  h1.hero-title em{
+    font-style:normal;
+    color:var(--blue);
+  }
+  .hero-copy{
+    font-size:18px;
+    color:var(--ink-soft);
+    max-width:44ch;
+    margin-bottom:36px;
+  }
+  .hero-actions{
+    display:flex;
+    gap:16px;
+    align-items:center;
+  }
+  .btn{
+    font-family:'IBM Plex Mono', monospace;
+    font-size:12px;
+    letter-spacing:.08em;
+    text-transform:uppercase;
+    padding:14px 26px;
+    border:1px solid var(--ink);
+    background:var(--ink);
+    color:var(--paper);
+    transition:all .2s ease;
+  }
+  .btn:hover{ background:transparent; color:var(--ink); }
+  .btn-ghost{
+    background:transparent;
+    color:var(--ink);
+  }
+  .btn-ghost:hover{ background:var(--ink); color:var(--paper); }
+
+  /* Axonometric line-drawing signature illustration */
+  .axo{
+    aspect-ratio:1/1.05;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    position:relative;
+  }
+  .axo svg{ width:100%; height:100%; }
+  .axo-caption{
+    position:absolute;
+    bottom:0; left:0;
+    display:flex;
+  }
+
+  /* ---------- Section framing ---------- */
+  section{ padding:110px 0; border-top:1px solid var(--line); }
+  .section-head{
+    display:flex;
+    justify-content:space-between;
+    align-items:flex-end;
+    margin-bottom:56px;
+    gap:24px;
+    flex-wrap:wrap;
+  }
+  .section-num{
+    font-family:'IBM Plex Mono', monospace;
+    font-size:12px;
+    color:var(--blue);
+    letter-spacing:.1em;
+    text-transform:uppercase;
+    margin-bottom:10px;
+    display:block;
+  }
+  h2{
+    font-family:'Space Grotesk', sans-serif;
+    font-weight:600;
+    font-size:clamp(28px, 3.4vw, 42px);
+    letter-spacing:-.01em;
+  }
+  .section-sub{
+    max-width:38ch;
+    color:var(--ink-soft);
+    font-size:16px;
+  }
+
+  /* ---------- Project index/grid ---------- */
+  .projects{
+    display:grid;
+    gap:2px;
+    background:var(--line);
+    border:1px solid var(--line);
+  }
+  .project{
+    background:var(--paper);
+    display:grid;
+    grid-template-columns:120px 1fr 220px 160px;
+    align-items:center;
+    gap:24px;
+    padding:28px 24px;
+    transition:background .25s ease;
+    cursor:pointer;
+  }
+  .project:hover{ background:var(--paper-deep); }
+  .project .p-num{
+    font-family:'IBM Plex Mono', monospace;
+    font-size:13px;
+    color:var(--blue);
+  }
+  .project .p-name{
+    font-family:'Space Grotesk', sans-serif;
+    font-weight:600;
+    font-size:22px;
+  }
+  .project .p-meta{
+    font-family:'IBM Plex Mono', monospace;
+    font-size:11px;
+    color:var(--ink-soft);
+    text-transform:uppercase;
+    letter-spacing:.06em;
+  }
+  .project .p-year{
+    font-family:'IBM Plex Mono', monospace;
+    font-size:13px;
+    color:var(--ink-soft);
+    text-align:right;
+  }
+
+  /* ---------- About ---------- */
+  .about-grid{
+    display:grid;
+    grid-template-columns:.85fr 1.15fr;
+    gap:64px;
+  }
+  .about-figure{
+    border:1px solid var(--line);
+    padding:28px;
+  }
+  .about-stats{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:24px;
+    margin-top:28px;
+  }
+  .stat .stat-num{
+    font-family:'Space Grotesk', sans-serif;
+    font-weight:700;
+    font-size:34px;
+    color:var(--blue);
+  }
+  .stat .stat-label{
+    font-family:'IBM Plex Mono', monospace;
+    font-size:11px;
+    letter-spacing:.06em;
+    text-transform:uppercase;
+    color:var(--ink-soft);
+  }
+  .about-body p{ margin-bottom:20px; color:var(--ink-soft); font-size:17px; max-width:56ch; }
+  .about-body p strong{ color:var(--ink); font-weight:500; }
+
+  /* ---------- Contact ---------- */
+  .contact-grid{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:64px;
+  }
+  .contact-block .tb-line{
+    display:flex;
+    justify-content:space-between;
+    padding:14px 0;
+    border-bottom:1px solid var(--line-soft);
+    font-family:'IBM Plex Mono', monospace;
+    font-size:13px;
+  }
+  .contact-block .tb-line span:first-child{ color:var(--ink-soft); text-transform:uppercase; letter-spacing:.06em; font-size:11px; }
+
+  form{ display:flex; flex-direction:column; gap:18px; }
+  label{
+    font-family:'IBM Plex Mono', monospace;
+    font-size:11px;
+    letter-spacing:.06em;
+    text-transform:uppercase;
+    color:var(--ink-soft);
+    margin-bottom:8px;
+    display:block;
+  }
+  input, textarea{
+    width:100%;
+    background:transparent;
+    border:none;
+    border-bottom:1px solid var(--line);
+    padding:10px 2px;
+    font-family:'Spectral', serif;
+    font-size:16px;
+    color:var(--ink);
+    outline:none;
+    transition:border-color .2s ease;
+  }
+  input:focus, textarea:focus{ border-color:var(--blue); }
+  textarea{ resize:vertical; min-height:90px; }
+
+  /* ---------- Footer ---------- */
+  footer{
+    border-top:1px solid var(--line);
+    padding:40px 0;
+  }
+  .footer-row{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    flex-wrap:wrap;
+    gap:16px;
+    font-family:'IBM Plex Mono', monospace;
+    font-size:11px;
+    letter-spacing:.05em;
+    text-transform:uppercase;
+    color:var(--ink-soft);
+  }
+
+  /* ---------- Focus visibility ---------- */
+  a:focus-visible, button:focus-visible, input:focus-visible, textarea:focus-visible{
+    outline:2px solid var(--blue);
+    outline-offset:2px;
+  }
+
+  /* ---------- Reduced motion ---------- */
+  @media (prefers-reduced-motion: reduce){
+    html{ scroll-behavior:auto; }
+    *{ transition:none !important; }
+  }
+
+  /* ---------- Responsive ---------- */
+  @media (max-width: 860px){
+    .hero-grid{ grid-template-columns:1fr; }
+    .axo{ max-width:340px; margin:0 auto; }
+    .about-grid, .contact-grid{ grid-template-columns:1fr; }
+    nav.links{ display:none; }
+    .menu-btn{ display:flex; }
+    .project{
+      grid-template-columns:1fr;
+      gap:8px;
+    }
+    .project .p-year{ text-align:left; }
+  }
+
+  @media (max-width: 860px){
+    nav.links.open{
+      display:flex;
+      flex-direction:column;
+      position:absolute;
+      top:100%; left:0; right:0;
+      background:var(--paper);
+      border-bottom:1px solid var(--line);
+      padding:24px 32px;
+      gap:20px;
+    }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="wrap nav">
+    <a href="#top" class="logo">ROWAN VOSS <span>ARCHITECTURE</span></a>
+    <nav class="links" id="navLinks">
+      <a href="#work">Work</a>
+      <a href="#about">Practice</a>
+      <a href="#contact">Contact</a>
+    </nav>
+    <button class="menu-btn" id="menuBtn" aria-label="Toggle menu" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</header>
+
+<main id="top">
+
+  <!-- HERO -->
+  <section class="hero" style="border-top:none;">
+    <div class="wrap hero-grid">
+      <div>
+        <div class="hero-eyebrow">Est. 2014 — Based in your city</div>
+        <h1 class="hero-title">Buildings drawn<br>from <em>site</em>, not style.</h1>
+        <p class="hero-copy">An independent architecture practice working across housing, civic, and adaptive-reuse projects — replace this intro with your own studio's point of view.</p>
+        <div class="hero-actions">
+          <a href="#work" class="btn">View Selected Work</a>
+          <a href="#contact" class="btn btn-ghost">Start a Project</a>
+        </div>
+      </div>
+      <div class="axo">
+        <svg viewBox="0 0 400 420" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <!-- axonometric massing sketch -->
+          <g stroke="#17181c" stroke-width="1.1">
+            <path d="M60 260 L200 190 L340 260 L200 330 Z" fill="#e7e3da"/>
+            <path d="M60 260 L60 150 L200 80 L200 190 Z" fill="#ded8cb"/>
+            <path d="M200 190 L200 80 L340 150 L340 260 Z" fill="#cfcabd"/>
+            <path d="M100 150 L100 90 L160 60 L160 120 Z" fill="#e7e3da" stroke-width="1"/>
+            <path d="M160 120 L160 60 L200 80 L200 140 Z" fill="#ded8cb" stroke-width="1"/>
+            <line x1="60" y1="260" x2="60" y2="150" stroke="#1f3a5f" stroke-width="1.4"/>
+            <line x1="200" y1="330" x2="200" y2="220" stroke="#1f3a5f" stroke-width="1.4" stroke-dasharray="2 4"/>
+            <circle cx="200" cy="190" r="3" fill="#1f3a5f"/>
+          </g>
+          <g stroke="#b8b3a6" stroke-width="0.6">
+            <line x1="20" y1="360" x2="380" y2="360"/>
+            <line x1="20" y1="360" x2="20" y2="350"/>
+            <line x1="380" y1="360" x2="380" y2="350"/>
+          </g>
+          <text x="20" y="380" font-family="IBM Plex Mono, monospace" font-size="10" fill="#4a4b4f">0</text>
+          <text x="370" y="380" font-family="IBM Plex Mono, monospace" font-size="10" fill="#4a4b4f">10M</text>
+        </svg>
+        <div class="axo-caption">
+          <div class="titleblock">
+            <div><span class="tb-label">Sheet</span><span class="tb-value">A—00</span></div>
+            <div><span class="tb-label">Scale</span><span class="tb-value">NTS</span></div>
+            <div><span class="tb-label">Study</span><span class="tb-value">Massing</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- WORK / PROJECT INDEX -->
+  <section id="work">
+    <div class="wrap">
+      <div class="section-head">
+        <div>
+          <span class="section-num">01 — Drawing Set</span>
+          <h2>Selected Work</h2>
+        </div>
+        <p class="section-sub">Five projects spanning residential, civic, and adaptive reuse. Replace with your own project names, types, and years.</p>
+      </div>
+
+      <div class="projects">
+        <div class="project" tabindex="0">
+          <span class="p-num mono">A—01</span>
+          <span class="p-name">Coastal Retreat</span>
+          <span class="p-meta">Private Residence · Timber</span>
+          <span class="p-year">2024</span>
+        </div>
+        <div class="project" tabindex="0">
+          <span class="p-num mono">A—02</span>
+          <span class="p-name">Elm Street Library</span>
+          <span class="p-meta">Civic · Concrete &amp; Glass</span>
+          <span class="p-year">2023</span>
+        </div>
+        <div class="project" tabindex="0">
+          <span class="p-num mono">A—03</span>
+          <span class="p-name">Kestrel Infill Housing</span>
+          <span class="p-meta">Multi-Family · 12 Units</span>
+          <span class="p-year">2022</span>
+        </div>
+        <div class="project" tabindex="0">
+          <span class="p-num mono">A—04</span>
+          <span class="p-name">Foundry Pavilion</span>
+          <span class="p-meta">Cultural · Steel Frame</span>
+          <span class="p-year">2021</span>
+        </div>
+        <div class="project" tabindex="0">
+          <span class="p-num mono">A—05</span>
+          <span class="p-name">Warehouse No. 6</span>
+          <span class="p-meta">Adaptive Reuse · Brick</span>
+          <span class="p-year">2020</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ABOUT / PRACTICE -->
+  <section id="about">
+    <div class="wrap about-grid">
+      <div>
+        <div class="about-figure">
+          <svg viewBox="0 0 300 340" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+            <g stroke="#17181c" stroke-width="1">
+              <rect x="30" y="40" width="240" height="260" fill="none"/>
+              <line x1="30" y1="120" x2="270" y2="120"/>
+              <line x1="30" y1="200" x2="270" y2="200"/>
+              <line x1="110" y1="40" x2="110" y2="300"/>
+              <line x1="190" y1="40" x2="190" y2="300"/>
+            </g>
+            <g stroke="#1f3a5f" stroke-width="1.2">
+              <circle cx="150" cy="160" r="26"/>
+              <line x1="150" y1="134" x2="150" y2="186"/>
+              <line x1="124" y1="160" x2="176" y2="160"/>
+            </g>
+          </svg>
+        </div>
+        <div class="about-stats">
+          <div class="stat">
+            <div class="stat-num">40+</div>
+            <div class="stat-label">Projects Delivered</div>
+          </div>
+          <div class="stat">
+            <div class="stat-num">11</div>
+            <div class="stat-label">Years in Practice</div>
+          </div>
+        </div>
+      </div>
+      <div class="about-body">
+        <span class="section-num">02 — Practice</span>
+        <h2 style="margin-bottom:24px;">About the Studio</h2>
+        <p><strong>Replace this paragraph with your own background</strong> — where you trained, the practices you worked at before founding your own studio, and what your design philosophy is. Keep it to two or three short paragraphs; this is a portfolio, not a resume.</p>
+        <p>Describe how you approach a typical project: the first site visit, how you work with clients and contractors, and what a person can expect from working with you from concept through construction.</p>
+        <p>Mention any teaching, writing, awards, or press here if relevant — or cut this paragraph entirely if it doesn't apply.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <section id="contact">
+    <div class="wrap contact-grid">
+      <div class="contact-block">
+        <span class="section-num">03 — Contact</span>
+        <h2 style="margin-bottom:32px;">Start a Conversation</h2>
+        <div class="tb-line"><span>Email</span><span>hello@yourdomain.com</span></div>
+        <div class="tb-line"><span>Phone</span><span>+1 (000) 000-0000</span></div>
+        <div class="tb-line"><span>Studio</span><span>Your City, State</span></div>
+        <div class="tb-line"><span>Instagram</span><span>@yourhandle</span></div>
+      </div>
+      <div>
+        <form action="https://formspree.io/f/yourFormID" method="POST">
+          <div>
+            <label for="name">Name</label>
+            <input type="text" id="name" name="name" required>
+          </div>
+          <div>
+            <label for="email">Email</label>
+            <input type="email" id="email" name="email" required>
+          </div>
+          <div>
+            <label for="message">Project details</label>
+            <textarea id="message" name="message" required></textarea>
+          </div>
+          <button type="submit" class="btn" style="align-self:flex-start; margin-top:8px;">Send Message</button>
+        </form>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  <div class="wrap footer-row">
+    <span>© 2026 Rowan Voss Architecture</span>
+    <div class="titleblock">
+      <div><span class="tb-label">Sheet</span><span class="tb-value">Z—00</span></div>
+      <div><span class="tb-label">Rev</span><span class="tb-value">1.0</span></div>
+    </div>
+    <span>Built with care, no algorithms harmed</span>
+  </div>
+</footer>
+
+<script>
+  const menuBtn = document.getElementById('menuBtn');
+  const navLinks = document.getElementById('navLinks');
+  menuBtn.addEventListener('click', () => {
+    const isOpen = navLinks.classList.toggle('open');
+    menuBtn.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+  });
+  navLinks.querySelectorAll('a').forEach(link => {
+    link.addEventListener('click', () => {
+      navLinks.classList.remove('open');
+      menuBtn.setAttribute('aria-expanded', 'false');
+    });
+  });
+</script>
+
+</body>
+</html>
